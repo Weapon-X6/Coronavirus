@@ -1,0 +1,62 @@
+﻿@model Coronavirus.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>TOP 10 COVID CASES</h2>
+<hr />
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="form-group">
+                @Html.DropDownListFor(x => x.SelectedReport, Model.Lista, "Regions", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <input class="btn btn-primary" type="submit"  value="Submit" />
+        </div>
+        <div class="col-lg-7">
+            <div class="btn-group justify-content-end" role="group" aria-label="Options">
+                @Html.ActionLink("XML", "ExportToXml", "Home", null, new { @class = "btn btn-danger" })                
+                @Html.ActionLink("JSON", "ExportToJson", "Home", null, new { @class = "btn btn-danger" })
+                @Html.ActionLink("CSV", "ExportToCsv", "Home", null, new { @class = "btn btn-danger" })
+            </div>
+        </div>
+    </div>
+}
+<hr />
+<br />
+
+    <table class="table table-hover" id="Top10Corona">
+        <tr>
+            <th>
+                @ViewBag.Name
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Cases)*@
+                CASES
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Reports.Cas)*@
+                DEATHS
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Reports)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cases)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deaths)
+                </td>
+            </tr>
+        }
+    </table>
